@@ -37,6 +37,7 @@ class Role
     public function setName(string $name): Role
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -48,6 +49,7 @@ class Role
     public function setDescription(string $description): Role
     {
         $this->description = $description;
+
         return $this;
     }
 }

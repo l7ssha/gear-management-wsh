@@ -14,9 +14,9 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'users')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public final const ADMIN_EMAIL = 'admin@example.com';
-    public final const ADMIN_ID = '01GFTZHFTNQEABQXB7GJ263VWN';
-    public final const ADMIN_USERNAME = 'admin';
+    final public const ADMIN_EMAIL = 'admin@example.com';
+    final public const ADMIN_ID = '01GFTZHFTNQEABQXB7GJ263VWN';
+    final public const ADMIN_USERNAME = 'admin';
 
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 26)]
@@ -54,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): User
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -65,6 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): User
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -76,6 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): User
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -85,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         return $this->roles
-            ->map(static fn(Role $role) => $role->getName())
+            ->map(static fn (Role $role) => $role->getName())
             ->toArray()
         ;
     }

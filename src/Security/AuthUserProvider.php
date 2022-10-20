@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\User\User;
+use App\Entity\Auth\User;
 use App\Exception\UserNotFoundException;
 use App\Repository\UserRepository;
 use Exception;
@@ -25,7 +25,7 @@ class AuthUserProvider implements UserProviderInterface
 
     public function supportsClass(string $class): bool
     {
-        return $class === User::class;
+        return User::class === $class;
     }
 
     /**

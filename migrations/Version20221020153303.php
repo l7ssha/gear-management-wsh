@@ -17,7 +17,7 @@ final class Version20221020153303 extends AbstractRoleMigration
     public function getRolesToAdd(): array
     {
         return [
-            PredefinedRoles::ROLE_DISPLAY_USERS
+            PredefinedRoles::ROLE_DISPLAY_USERS,
         ];
     }
 

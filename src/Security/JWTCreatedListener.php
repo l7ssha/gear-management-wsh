@@ -3,8 +3,6 @@
 namespace App\Security;
 
 use App\Entity\Auth\User;
-use DateInterval;
-use DateTime;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 
 class JWTCreatedListener
@@ -25,7 +23,7 @@ class JWTCreatedListener
     {
         return [
             'id' => $user->getId(),
-            'email' => $user->getEmail()
+            'email' => $user->getEmail(),
         ];
     }
 }
