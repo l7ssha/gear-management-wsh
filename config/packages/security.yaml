@@ -1,0 +1,50 @@
+security:
+    enable_authenticator_manager: true
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'argon2i'
+
+    providers:
+        auth_user_provider:
+            id: App\Security\AuthUserProvider
+        jwt:
+            lexik_jwt: ~
+
+    firewalls:
+        login:
+            pattern: ^/api/auth/login
+            stateless: true
+            json_login:
+                check_path: /api/auth/login
+                username_path: login
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            provider: auth_user_provider
+
+        refresh:
+            pattern: ^/api/auth/refresh
+            stateless: true
+            refresh_jwt:
+                check_path: api_refresh_token
+            provider: auth_user_provider
+
+        api:
+            pattern: ^/api
+            stateless: true
+            jwt: ~
+            provider: jwt
+
+    access_control:
+        - { path: ^/api/auth/login,     roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth/refresh,   roles: PUBLIC_ACCESS }
+        - { path: ^/docs,               roles: PUBLIC_ACCESS }
+        - { path: ^/api,                roles: IS_AUTHENTICATED_FULLY }
+
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
