@@ -7,8 +7,16 @@ cs-fix: ## Run cs-fixer
 	docker compose run app vendor/bin/php-cs-fixer fix --show-progress=dots
 
 .PHONY: cs-fix-check
-cs-fix-check: ## Run cs-fixer
+cs-fix-check: ## Run cs-fixer in dry run mode
 	docker compose run app vendor/bin/php-cs-fixer fix --show-progress=dots --dry-run
+
+.PHONY: rector
+rector: ## Run rector
+	docker compose run app vendor/bin/rector process
+
+.PHONY: rector-check
+rector-check: ## Run rector in dry run mode
+	docker compose run app vendor/bin/rector process --dry-run
 
 .PHONY: server-start
 server-start: ## Start server
