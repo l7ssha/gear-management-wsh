@@ -10,7 +10,9 @@ RUN set -ex \
     libzip-dev \
     libxslt-dev \
     libpng-dev \
-    oniguruma-dev
+    oniguruma-dev \
+    nodejs \
+    yarn
 
 RUN docker-php-ext-install pdo pdo_pgsql zip xsl gd intl opcache exif mbstring
 
