@@ -11,7 +11,7 @@ class Role
 {
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 26)]
-    private string $id;
+    private readonly string $id;
 
     #[ORM\Column(type: 'string', unique: true, updatable: false)]
     private string $name;

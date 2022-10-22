@@ -2,20 +2,19 @@
 
 namespace App\Entity\Gear;
 
-use App\Entity\Auth\User;
 use App\Model\LensType;
-use DateTimeImmutable;
+use App\Utils\Doctrine\AbstractAuditableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'lenses')]
 #[ORM\Index(fields: ['model'])]
-class Lens
+class Lens extends AbstractAuditableEntity
 {
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 26, updatable: false)]
-    private string $id;
+    private readonly string $id;
 
     #[ORM\Column(type: 'string', length: 32)]
     private string $producerName;
@@ -40,16 +39,6 @@ class Lens
 
     #[ORM\Column(type: 'string')]
     private ?string $serialNumberAlternative = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\Column(updatable: false)]
-    private User $createdBy;
-
-    #[ORM\Column(type: 'datetime_immutable', updatable: false)]
-    private DateTimeImmutable $createdAt;
-
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct(?string $id = null)
     {
