@@ -2,6 +2,10 @@
 
 namespace App\Entity\Auth;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Dto\UserOutputDto;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +16,13 @@ use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'users')]
+#[ApiResource(
+    operations: [
+        new Get(security: "is_granted('ROLE_DISPLAY_USERS')"),
+        new GetCollection(security: "is_granted('ROLE_DISPLAY_USERS')"),
+    ],
+    output: UserOutputDto::class
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     final public const ADMIN_EMAIL = 'admin@example.com';
@@ -88,7 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         return $this->roles
-            ->map(static fn (Role $role) => $role->getName())
+            ->map(static fn (Role $role) => $role->getSymfonyName())
             ->toArray()
         ;
     }

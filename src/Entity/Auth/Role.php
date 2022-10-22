@@ -34,6 +34,11 @@ class Role
         return $this->name;
     }
 
+    public function getSymfonyName(): string
+    {
+        return "ROLE_{$this->getName()}";
+    }
+
     public function setName(string $name): Role
     {
         $this->name = $name;

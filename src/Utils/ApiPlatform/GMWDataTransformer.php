@@ -6,7 +6,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-abstract class EmprDataTransformer implements NormalizerInterface, NormalizerAwareInterface
+abstract class GMWDataTransformer implements NormalizerInterface, NormalizerAwareInterface
 {
     use NormalizerAwareTrait;
 
