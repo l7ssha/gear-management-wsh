@@ -2,18 +2,21 @@
 
 namespace App\Entity\Gear;
 
+use App\Entity\Auth\User;
 use App\Model\CameraFormat;
 use App\Model\CameraType;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'cameras')]
 #[ORM\Index(fields: ['model'])]
+#[ORM\Index(fields: ['createdBy'])]
 class Camera
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'string', length: 26)]
+    #[ORM\Column(type: 'string', length: 26, updatable: false)]
     private readonly string $id;
 
     #[ORM\Column(type: 'string', length: 32)]
@@ -36,6 +39,16 @@ class Camera
 
     #[ORM\Column(type: 'string')]
     private ?string $serialNumberAlternative = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\Column(updatable: false)]
+    private User $createdBy;
+
+    #[ORM\Column(type: 'datetime_immutable', updatable: false)]
+    private DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct(?string $id = null)
     {
@@ -127,6 +140,42 @@ class Camera
     public function setSerialNumberAlternative(?string $serialNumberAlternative): Camera
     {
         $this->serialNumberAlternative = $serialNumberAlternative;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(User $createdBy): Camera
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTimeImmutable $createdAt): Camera
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): Camera
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -2,7 +2,9 @@
 
 namespace App\Entity\Gear;
 
+use App\Entity\Auth\User;
 use App\Model\LensType;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
@@ -12,7 +14,7 @@ use Symfony\Component\Uid\Ulid;
 class Lens
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'string', length: 26)]
+    #[ORM\Column(type: 'string', length: 26, updatable: false)]
     private string $id;
 
     #[ORM\Column(type: 'string', length: 32)]
@@ -38,6 +40,16 @@ class Lens
 
     #[ORM\Column(type: 'string')]
     private ?string $serialNumberAlternative = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\Column(updatable: false)]
+    private User $createdBy;
+
+    #[ORM\Column(type: 'datetime_immutable', updatable: false)]
+    private DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct(?string $id = null)
     {
