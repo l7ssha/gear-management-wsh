@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractAuditableEntity
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\Column(updatable: false)]
     protected User $createdBy;
 
     #[ORM\Column(type: 'datetime_immutable', updatable: false)]

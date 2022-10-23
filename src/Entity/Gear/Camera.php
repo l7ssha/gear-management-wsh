@@ -18,8 +18,8 @@ class Camera extends AbstractAuditableEntity
     #[ORM\Column(type: 'string', length: 26, updatable: false)]
     private readonly string $id;
 
-    #[ORM\Column(type: 'string', length: 32)]
-    private string $producerName;
+    #[ORM\ManyToOne(targetEntity: CameraProducer::class)]
+    private CameraProducer $producer;
 
     #[ORM\Column(type: 'string', length: 32)]
     private string $model;
@@ -49,14 +49,14 @@ class Camera extends AbstractAuditableEntity
         return $this->id;
     }
 
-    public function getProducerName(): string
+    public function getProducer(): CameraProducer
     {
-        return $this->producerName;
+        return $this->producer;
     }
 
-    public function setProducerName(string $producerName): Camera
+    public function setProducer(CameraProducer $producer): Camera
     {
-        $this->producerName = $producerName;
+        $this->producer = $producer;
 
         return $this;
     }

@@ -2,12 +2,25 @@
 
 namespace App\Entity\Gear;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Dto\CameraSystemOutputDto;
 use App\Utils\Doctrine\AbstractAuditableEntityWithEditorEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'camera_systems')]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+    ],
+    output: CameraSystemOutputDto::class
+)]
 class CameraSystem extends AbstractAuditableEntityWithEditorEntity
 {
     #[ORM\Id]
@@ -17,12 +30,13 @@ class CameraSystem extends AbstractAuditableEntityWithEditorEntity
     #[ORM\Column(type: 'string', length: 32)]
     private string $name;
 
-    #[ORM\Column(type: 'string', length: 32)]
-    private string $producerName;
+    #[ORM\ManyToMany(targetEntity: CameraProducer::class)]
+    private Collection $producers;
 
     public function __construct(?string $id = null)
     {
         $this->id = $id ?? Ulid::generate();
+        $this->producers = new ArrayCollection();
     }
 
     public function getId(): string
@@ -42,14 +56,14 @@ class CameraSystem extends AbstractAuditableEntityWithEditorEntity
         return $this;
     }
 
-    public function getProducerName(): string
+    public function getProducers(): Collection
     {
-        return $this->producerName;
+        return $this->producers;
     }
 
-    public function setProducerName(string $producerName): CameraSystem
+    public function setProducers(Collection $producers): CameraSystem
     {
-        $this->producerName = $producerName;
+        $this->producers = $producers;
 
         return $this;
     }
