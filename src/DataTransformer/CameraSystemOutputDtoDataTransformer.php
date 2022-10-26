@@ -2,7 +2,7 @@
 
 namespace App\DataTransformer;
 
-use App\Dto\CameraSystemOutputDto;
+use App\Dto\Gear\CameraSystemOutputDto;
 use App\Entity\Gear\CameraSystem;
 use App\Mapper\CameraSystemDtoMapper;
 use App\Utils\ApiPlatform\GMWDataTransformer;

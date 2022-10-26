@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Gear;
 
 class CameraSystemOutputDto
 {
     public string $name;
-    /** @var string[] */
+    /** @var CameraProducerOutputDto[] */
     public array $producers = [];
 }

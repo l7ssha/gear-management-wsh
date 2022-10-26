@@ -5,8 +5,10 @@ namespace App\Entity\Gear;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use App\Dto\CameraSystemOutputDto;
-use App\Utils\Doctrine\AbstractAuditableEntityWithEditorEntity;
+use App\Dto\Gear\CameraSystemOutputDto;
+use App\Utils\Doctrine\CreatedAuditTrait;
+use App\Utils\Doctrine\SoftDeleteTrait;
+use App\Utils\Doctrine\UpdatedAuditTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,13 +23,17 @@ use Symfony\Component\Uid\Ulid;
     ],
     output: CameraSystemOutputDto::class
 )]
-class CameraSystem extends AbstractAuditableEntityWithEditorEntity
+class CameraSystem
 {
+    use SoftDeleteTrait;
+    use CreatedAuditTrait;
+    use UpdatedAuditTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 26, updatable: false)]
     private readonly string $id;
 
-    #[ORM\Column(type: 'string', length: 32)]
+    #[ORM\Column(type: 'string', length: 32, unique: true)]
     private string $name;
 
     #[ORM\ManyToMany(targetEntity: CameraProducer::class)]

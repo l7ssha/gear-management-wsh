@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Auth\User;
+use App\Exception\UserNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;
@@ -22,6 +23,11 @@ class UserRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function getByUsernameOrEmail(string $identifier): User
+    {
+        return $this->findByUsernameOrEmail($identifier) ?? throw UserNotFoundException::fromUserUsername($identifier);
     }
 
     public function findById(string $id): ?User

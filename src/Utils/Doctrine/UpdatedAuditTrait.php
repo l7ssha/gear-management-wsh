@@ -3,12 +3,16 @@
 namespace App\Utils\Doctrine;
 
 use App\Entity\Auth\User;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-abstract class AbstractAuditableEntityWithEditorEntity extends AbstractAuditableEntity
+trait UpdatedAuditTrait
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
     protected ?User $updatedBy = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected ?DateTimeImmutable $updatedAt = null;
 
     public function getUpdatedBy(): ?User
     {

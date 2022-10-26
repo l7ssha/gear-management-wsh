@@ -3,15 +3,19 @@
 namespace App\Entity\Gear;
 
 use App\Model\LensType;
-use App\Utils\Doctrine\AbstractAuditableEntity;
+use App\Utils\Doctrine\createdAuditTrait;
+use App\Utils\Doctrine\UpdatedAuditTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'lenses')]
 #[ORM\Index(fields: ['model'])]
-class Lens extends AbstractAuditableEntity
+class Lens
 {
+    use CreatedAuditTrait;
+    use UpdatedAuditTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 26, updatable: false)]
     private readonly string $id;
@@ -19,7 +23,7 @@ class Lens extends AbstractAuditableEntity
     #[ORM\ManyToOne(targetEntity: CameraProducer::class)]
     private CameraProducer $producerName;
 
-    #[ORM\Column(type: 'string', length: 32)]
+    #[ORM\Column(type: 'string', length: 32, unique: true)]
     private string $model;
 
     #[ORM\Column(type: 'string', enumType: LensType::class)]

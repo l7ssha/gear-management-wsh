@@ -1,0 +1,55 @@
+<?php
+
+namespace App\ApiPlatform;
+
+use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
+use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
+use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Metadata\Operation;
+use App\Utils\ApiPlatform\EntityOwnerInterface;
+use App\Utils\Doctrine\CreatedAuditTrait;
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+class EntityOwnerApiPlatformExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
+{
+    public function __construct(private readonly TokenStorageInterface $tokenStorage)
+    {
+    }
+
+    public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, Operation $operation = null, array $context = []): void
+    {
+        $this->addWhere($queryBuilder, $resourceClass);
+    }
+
+    public function applyToItem(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, array $identifiers, Operation $operation = null, array $context = []): void
+    {
+        $this->addWhere($queryBuilder, $resourceClass);
+    }
+
+    /**
+     * @param class-string $resourceClass
+     */
+    private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
+    {
+        $implementsEntityOwnerInterface = in_array(EntityOwnerInterface::class, class_implements($resourceClass), true);
+        $usesCreatedAuditTrait = in_array(CreatedAuditTrait::class, class_implements($resourceClass), true);
+
+        if (!$implementsEntityOwnerInterface || !$usesCreatedAuditTrait) {
+            return;
+        }
+
+        $rootAlias = $queryBuilder->getRootAliases()[0];
+        $queryBuilder
+            ->innerJoin(
+                sprintf(
+                    '%s.createdBy',
+                    $rootAlias
+                ),
+                'cbu'
+            )
+            ->orWhere('cbu.email = :currentUserIdentifier')
+            ->orWhere('cbu.username = :currentUserIdentifier')
+            ->setParameter('currentUserIdentifier', $this->tokenStorage->getToken()->getUser()->getUserIdentifier());
+    }
+}

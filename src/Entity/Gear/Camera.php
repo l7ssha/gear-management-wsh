@@ -2,9 +2,16 @@
 
 namespace App\Entity\Gear;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Dto\Gear\Camera\CameraCreateInputDto;
+use App\Dto\Gear\Camera\CameraOutputDto;
 use App\Model\CameraFormat;
 use App\Model\CameraType;
-use App\Utils\Doctrine\AbstractAuditableEntity;
+use App\Utils\Doctrine\CreatedAuditTrait;
+use App\Utils\Doctrine\UpdatedAuditTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
@@ -12,8 +19,19 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'cameras')]
 #[ORM\Index(fields: ['model'])]
 #[ORM\Index(fields: ['createdBy'])]
-class Camera extends AbstractAuditableEntity
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(),
+        new Post(input: CameraCreateInputDto::class, messenger: 'input'),
+    ],
+    output: CameraOutputDto::class
+)]
+class Camera
 {
+    use CreatedAuditTrait;
+    use UpdatedAuditTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 26, updatable: false)]
     private readonly string $id;
@@ -36,7 +54,7 @@ class Camera extends AbstractAuditableEntity
     #[ORM\Column(type: 'string')]
     private string $serialNumber;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $serialNumberAlternative = null;
 
     public function __construct(?string $id = null)
