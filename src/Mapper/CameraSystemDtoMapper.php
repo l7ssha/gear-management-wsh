@@ -2,6 +2,7 @@
 
 namespace App\Mapper;
 
+use App\Dto\Gear\CameraSystemLightOutputDto;
 use App\Dto\Gear\CameraSystemOutputDto;
 use App\Entity\Gear\CameraProducer;
 use App\Entity\Gear\CameraSystem;
@@ -21,6 +22,15 @@ class CameraSystemDtoMapper
             ->map(fn (CameraProducer $cameraProducer) => $this->cameraProducerDtoMapper->mapCameraProducerToOutputDto($cameraProducer))
             ->toArray()
         ;
+
+        return $dto;
+    }
+
+    public function mapCameraSystemToLightOutputDto(CameraSystem $cameraSystem): CameraSystemLightOutputDto
+    {
+        $dto = new CameraSystemLightOutputDto();
+
+        $dto->name = $cameraSystem->getName();
 
         return $dto;
     }

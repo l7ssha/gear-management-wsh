@@ -22,7 +22,7 @@ class CameraDtoMapper
         $dto->model = $camera->getModel();
         $dto->type = $camera->getType()->value;
         $dto->format = $camera->getFormat()->value;
-        $dto->system = $this->cameraSystemDtoMapper->mapCameraSystemToOutputDto($camera->getSystem());
+        $dto->system = $this->cameraSystemDtoMapper->mapCameraSystemToLightOutputDto($camera->getSystem());
         $dto->serialNumber = $camera->getSerialNumber();
         $dto->serialNumberAlternative = $camera->getSerialNumberAlternative();
 
