@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\ApiPlatform;
+namespace App\ApiPlatform;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;

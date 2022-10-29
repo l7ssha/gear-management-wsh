@@ -2,10 +2,10 @@
 
 namespace App\DataTransformer;
 
+use App\ApiPlatform\GMWDataTransformer;
 use App\Dto\UserOutputDto;
 use App\Entity\Auth\User;
 use App\Mapper\UserDtoMapper;
-use App\Utils\ApiPlatform\GMWDataTransformer;
 
 class UserOutputDtoTransformer extends GMWDataTransformer
 {

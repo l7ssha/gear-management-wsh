@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\ApiPlatform;
+namespace App\ApiPlatform;
 
 interface EntityOwnerInterface
 {

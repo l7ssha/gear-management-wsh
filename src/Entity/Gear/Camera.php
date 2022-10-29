@@ -3,9 +3,11 @@
 namespace App\Entity\Gear;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use App\ApiPlatform\EntityOwnerInterface;
 use App\Dto\Gear\Camera\CameraCreateInputDto;
 use App\Dto\Gear\Camera\CameraOutputDto;
 use App\Model\CameraFormat;
@@ -24,10 +26,11 @@ use Symfony\Component\Uid\Ulid;
         new GetCollection(),
         new Get(),
         new Post(input: CameraCreateInputDto::class, messenger: 'input'),
+        new Delete(messenger: 'input'),
     ],
     output: CameraOutputDto::class
 )]
-class Camera
+class Camera implements EntityOwnerInterface
 {
     use CreatedAuditTrait;
     use UpdatedAuditTrait;

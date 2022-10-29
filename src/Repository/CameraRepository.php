@@ -19,6 +19,12 @@ class CameraRepository
         $this->manager->getManager()->flush();
     }
 
+    public function remove(Camera $camera): void
+    {
+        $this->manager->getManager()->remove($camera);
+        $this->manager->getManager()->flush();
+    }
+
     /**
      * @return EntityRepository<Camera>
      */

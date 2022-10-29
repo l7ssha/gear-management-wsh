@@ -2,6 +2,7 @@
 
 namespace App\Entity\Gear;
 
+use App\ApiPlatform\EntityOwnerInterface;
 use App\Model\LensType;
 use App\Utils\Doctrine\createdAuditTrait;
 use App\Utils\Doctrine\UpdatedAuditTrait;
@@ -11,7 +12,7 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Entity]
 #[ORM\Table(name: 'lenses')]
 #[ORM\Index(fields: ['model'])]
-class Lens
+class Lens implements EntityOwnerInterface
 {
     use CreatedAuditTrait;
     use UpdatedAuditTrait;

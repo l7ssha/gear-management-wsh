@@ -2,10 +2,10 @@
 
 namespace App\DataTransformer;
 
+use App\ApiPlatform\GMWDataTransformer;
 use App\Dto\Gear\CameraSystemOutputDto;
 use App\Entity\Gear\CameraSystem;
 use App\Mapper\CameraSystemDtoMapper;
-use App\Utils\ApiPlatform\GMWDataTransformer;
 
 class CameraSystemOutputDtoDataTransformer extends GMWDataTransformer
 {
