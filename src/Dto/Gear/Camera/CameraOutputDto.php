@@ -4,7 +4,6 @@ namespace App\Dto\Gear\Camera;
 
 use App\Dto\Gear\CameraProducerOutputDto;
 use App\Dto\Gear\CameraSystemLightOutputDto;
-use App\Dto\Gear\CameraSystemOutputDto;
 
 class CameraOutputDto
 {
