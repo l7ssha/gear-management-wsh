@@ -7,12 +7,12 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\ApiPlatform\EntityOwnerInterface;
 use App\Dto\Gear\Camera\CameraCreateInputDto;
 use App\Dto\Gear\Camera\CameraOutputDto;
 use App\Model\CameraFormat;
 use App\Model\CameraType;
 use App\Utils\Doctrine\CreatedAuditTrait;
+use App\Utils\Doctrine\EntityOwnerTrait;
 use App\Utils\Doctrine\UpdatedAuditTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
@@ -30,8 +30,9 @@ use Symfony\Component\Uid\Ulid;
     ],
     output: CameraOutputDto::class
 )]
-class Camera implements EntityOwnerInterface
+class Camera
 {
+    use EntityOwnerTrait;
     use CreatedAuditTrait;
     use UpdatedAuditTrait;
 

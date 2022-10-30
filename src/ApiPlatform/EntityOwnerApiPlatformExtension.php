@@ -7,6 +7,7 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Utils\Doctrine\CreatedAuditTrait;
+use App\Utils\Doctrine\EntityOwnerTrait;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -31,10 +32,12 @@ class EntityOwnerApiPlatformExtension implements QueryCollectionExtensionInterfa
      */
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
     {
-        $implementsEntityOwnerInterface = in_array(EntityOwnerInterface::class, class_implements($resourceClass), true);
-        $usesCreatedAuditTrait = in_array(CreatedAuditTrait::class, class_implements($resourceClass), true);
+        $classUses = class_uses($resourceClass);
 
-        if (!$implementsEntityOwnerInterface || !$usesCreatedAuditTrait) {
+        $usesEntityOwnerTrait = in_array(EntityOwnerTrait::class, $classUses, true);
+        $usesCreatedAuditTrait = in_array(CreatedAuditTrait::class, $classUses, true);
+
+        if (!$usesEntityOwnerTrait || !$usesCreatedAuditTrait) {
             return;
         }
 
