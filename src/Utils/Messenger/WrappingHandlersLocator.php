@@ -9,11 +9,8 @@ use Symfony\Component\Messenger\Handler\HandlersLocatorInterface;
 
 class WrappingHandlersLocator implements HandlersLocatorInterface
 {
-    private HandlersLocatorInterface $decorated;
-
-    public function __construct(HandlersLocatorInterface $decorated)
+    public function __construct(private readonly HandlersLocatorInterface $decorated)
     {
-        $this->decorated = $decorated;
     }
 
     public function getHandlers(Envelope $envelope): iterable
