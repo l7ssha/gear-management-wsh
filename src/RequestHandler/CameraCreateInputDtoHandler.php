@@ -7,9 +7,8 @@ use App\Entity\Gear\Camera;
 use App\Repository\CameraProducerRepository;
 use App\Repository\CameraRepository;
 use App\Repository\CameraSystemRepository;
-use App\Repository\UserRepository;
+use App\Security\TokenUserProvider;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CameraCreateInputDtoHandler implements MessageHandlerInterface
 {
@@ -17,8 +16,7 @@ class CameraCreateInputDtoHandler implements MessageHandlerInterface
         private readonly CameraRepository $cameraRepository,
         private readonly CameraProducerRepository $cameraProducerRepository,
         private readonly CameraSystemRepository $cameraSystemRepository,
-        private readonly TokenStorageInterface $tokenStorage,
-        private readonly UserRepository $userRepository
+        private readonly TokenUserProvider $tokenUserProvider
     ) {
     }
 
@@ -34,11 +32,7 @@ class CameraCreateInputDtoHandler implements MessageHandlerInterface
             ->setSerialNumber($dto->serialNumber)
             ->setSerialNumberAlternative($dto->serialNumberAlternative)
             ->setCreatedAt(new \DateTimeImmutable())
-            ->setCreatedBy(
-                $this->userRepository->getByUsernameOrEmail(
-                    $this->tokenStorage->getToken()->getUserIdentifier()
-                )
-            )
+            ->setCreatedBy($this->tokenUserProvider->getCurrentUser())
         ;
 
         $this->cameraRepository->save($camera);

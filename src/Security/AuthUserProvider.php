@@ -3,7 +3,7 @@
 namespace App\Security;
 
 use App\Entity\Auth\User;
-use App\Exception\UserNotFoundException;
+use App\Exception\NotFound\UserNotFoundException;
 use App\Repository\UserRepository;
 use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;

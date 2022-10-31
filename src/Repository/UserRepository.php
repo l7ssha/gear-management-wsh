@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Auth\User;
-use App\Exception\UserNotFoundException;
+use App\Exception\NotFound\UserNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;

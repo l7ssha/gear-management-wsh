@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Exception;
+namespace App\Exception\NotFound;
+
+use App\Exception\NotFoundException;
 
 class UserNotFoundException extends NotFoundException
 {

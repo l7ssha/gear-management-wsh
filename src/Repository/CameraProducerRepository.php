@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Gear\CameraProducer;
-use App\Exception\CameraProducerNotFoundException;
+use App\Exception\NotFound\CameraProducerNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;

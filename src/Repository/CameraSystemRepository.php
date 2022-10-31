@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Gear\CameraSystem;
-use App\Exception\CameraSystemNotFoundException;
+use App\Exception\NotFound\CameraSystemNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;
