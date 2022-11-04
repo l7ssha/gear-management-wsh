@@ -1,19 +1,13 @@
 import * as React from "react";
-import AuthService from "../services/AuthService";
 import {useNavigate} from "react-router";
+import AppNavbar from "../components/AppNavbar";
 
 export default function Root() {
     const navigate = useNavigate();
 
-    AuthService.checkIfLoggedIn().then(loggedIn => {
-        console.log(loggedIn);
-        if (!loggedIn) {
-            navigate('/login');
-        }
-    })
-
     return (
         <div>
+            <AppNavbar />
             Root works
         </div>
     )

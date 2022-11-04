@@ -6,10 +6,13 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Dto\UserOutputDto;
+use App\Provider\User\UserCollectionProvider;
+use App\Provider\User\UserItemProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Ulid;
@@ -18,11 +21,13 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'users')]
 #[ApiResource(
     operations: [
-        new Get(security: "is_granted('ROLE_DISPLAY_USERS')"),
-        new GetCollection(security: "is_granted('ROLE_DISPLAY_USERS')"),
+        new Get(security: "is_granted('ROLE_DISPLAY_USERS')", provider: UserItemProvider::class),
+        new GetCollection(security: "is_granted('ROLE_DISPLAY_USERS')", provider: UserCollectionProvider::class),
     ],
     output: UserOutputDto::class
 )]
+#[UniqueEntity('email')]
+#[UniqueEntity('username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     final public const ADMIN_EMAIL = 'admin@example.com';

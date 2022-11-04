@@ -8,11 +8,12 @@ import {
 import Root from "./routes/Root";
 import AdminUsers from "./routes/AdminUsers";
 import Login from "./routes/Login";
+import RequiresAuth from "./components/RequiresAuth";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />
+        element: <RequiresAuth><Root /></RequiresAuth>
     },
     {
         path: "/login",
@@ -20,12 +21,12 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin/users",
-        element: <AdminUsers />
+        element: <RequiresAuth><AdminUsers /></RequiresAuth>
     }
 ]);
 
 createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <RouterProvider router={router} />
-    </React.StrictMode>
+    // </React.StrictMode>
 );

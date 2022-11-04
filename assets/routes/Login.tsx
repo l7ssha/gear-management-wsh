@@ -30,7 +30,7 @@ export default function Login() {
         <Stack spacing={2}>
             {errorMessageElement}
             <TextField id="outlined-basic" label="Login" variant="outlined" onChange={e => setLogin(e.target.value)}/>
-            <TextField id="outlined-basic" label="Login" variant="outlined" type="password" onChange={e => setPassword(e.target.value)}/>
+            <TextField id="outlined-basic" label="Password" variant="outlined" type="password" onChange={e => setPassword(e.target.value)}/>
             <Button variant="outlined" type="submit" onClick={formSubmit}>Log in</Button>
         </Stack>
     )

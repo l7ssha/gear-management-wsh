@@ -2,6 +2,7 @@
 
 namespace App\RequestHandler;
 
+use ApiPlatform\Validator\ValidatorInterface;
 use App\Dto\Gear\Camera\CameraCreateInputDto;
 use App\Entity\Gear\Camera;
 use App\Repository\CameraProducerRepository;
@@ -16,7 +17,8 @@ class CameraCreateInputDtoHandler implements MessageHandlerInterface
         private readonly CameraRepository $cameraRepository,
         private readonly CameraProducerRepository $cameraProducerRepository,
         private readonly CameraSystemRepository $cameraSystemRepository,
-        private readonly TokenUserProvider $tokenUserProvider
+        private readonly TokenUserProvider $tokenUserProvider,
+        private readonly ValidatorInterface $validator
     ) {
     }
 
@@ -35,6 +37,7 @@ class CameraCreateInputDtoHandler implements MessageHandlerInterface
             ->setCreatedBy($this->tokenUserProvider->getCurrentUser())
         ;
 
+        $this->validator->validate($camera);
         $this->cameraRepository->save($camera);
 
         return $camera;

@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Dto\Gear\CameraSystemOutputDto;
+use App\Provider\CameraSystem\CameraSystemCollectionProvider;
+use App\Provider\CameraSystem\CameraSystemItemProvider;
 use App\Utils\Doctrine\CreatedAuditTrait;
 use App\Utils\Doctrine\SoftDeleteTrait;
 use App\Utils\Doctrine\UpdatedAuditTrait;
@@ -18,8 +20,8 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'camera_systems')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
+        new Get(provider: CameraSystemItemProvider::class),
+        new GetCollection(provider: CameraSystemCollectionProvider::class),
     ],
     output: CameraSystemOutputDto::class
 )]

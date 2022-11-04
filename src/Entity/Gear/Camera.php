@@ -11,10 +11,13 @@ use App\Dto\Gear\Camera\CameraCreateInputDto;
 use App\Dto\Gear\Camera\CameraOutputDto;
 use App\Model\CameraFormat;
 use App\Model\CameraType;
+use App\Provider\Camera\CameraCollectionProvider;
+use App\Provider\Camera\CameraItemProvider;
 use App\Utils\Doctrine\CreatedAuditTrait;
 use App\Utils\Doctrine\EntityOwnerTrait;
 use App\Utils\Doctrine\UpdatedAuditTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
@@ -23,13 +26,14 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Index(fields: ['createdBy'])]
 #[ApiResource(
     operations: [
-        new GetCollection(),
-        new Get(),
-        new Post(input: CameraCreateInputDto::class, messenger: 'input'),
+        new GetCollection(provider: CameraCollectionProvider::class),
+        new Get(provider: CameraItemProvider::class),
+        new Post(input: CameraCreateInputDto::class, messenger: 'input', provider: CameraItemProvider::class),
         new Delete(messenger: 'input'),
     ],
     output: CameraOutputDto::class
 )]
+#[UniqueEntity(['serialNumber', 'createdBy'], message: 'Camera with same serial number already exists')]
 class Camera
 {
     use EntityOwnerTrait;

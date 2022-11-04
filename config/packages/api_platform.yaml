@@ -19,3 +19,4 @@ api_platform:
 
   exception_to_status:
     App\Exception\NotFoundException: 404
+    ApiPlatform\Validator\Exception\ValidationException: 422
