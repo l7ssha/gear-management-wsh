@@ -7,7 +7,7 @@ import {Box, Button, Container, Grid} from "@mui/material";
 
 function AppNavbar() {
     return (
-        <AppBar position="static" sx={{lineHeight: 1.5, textAlign: 'center'}}>
+        <AppBar position="static">
             <Toolbar>
                 <Button
                     size="large"

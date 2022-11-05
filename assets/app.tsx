@@ -10,6 +10,11 @@ import AdminUsers from "./routes/AdminUsers";
 import Login from "./routes/Login";
 import RequiresAuth from "./components/RequiresAuth";
 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 const router = createBrowserRouter([
     {
         path: "/",
