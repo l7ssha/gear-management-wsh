@@ -2,6 +2,9 @@
 
 namespace App\Entity\Gear;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -33,6 +36,21 @@ use Symfony\Component\Uid\Ulid;
     ],
     output: CameraOutputDto::class
 )]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'model' => 'ipartial',
+        'type' => 'exact',
+        'format' => 'exact',
+        'system' => 'exact',
+        'serialNumber' => 'ipartial',
+        'serialNumberAlternative' => 'ipartial',
+    ]
+)]
+#[ApiFilter(OrderFilter::class, properties: [
+    'createdAt',
+    'updatedAt',
+])]
 #[UniqueEntity(['serialNumber', 'createdBy'], message: 'Camera with same serial number already exists')]
 class Camera
 {
