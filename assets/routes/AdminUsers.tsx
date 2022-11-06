@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import useAxiosWithAuth from "../hooks/useAxiosWithAuth";
-import BasePageWithAuth from "../components/base/BasePageWithAuth";
+import BasePage from "../components/base/BasePage";
 
 interface User {
     id: string,
@@ -20,13 +20,13 @@ export default function AdminUsers() {
     }, []);
 
     return (
-        <BasePageWithAuth>
+        <BasePage>
             <span>Users</span>
             {
                 users.map((user) => {
                     return <p key={user.id}>{user.username} {user.email}</p>
                 })
             }
-        </BasePageWithAuth>
+        </BasePage>
     )
 }

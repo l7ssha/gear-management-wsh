@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Dto\UserOutputDto;
+use App\Dto\UserStatsOutputDto;
+use App\Provider\Camera\UserStatsProvider;
 use App\Provider\User\UserCollectionProvider;
 use App\Provider\User\UserItemProvider;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,6 +23,7 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'users')]
 #[ApiResource(
     operations: [
+        new Get(uriTemplate: '/users/stats', output: UserStatsOutputDto::class, priority: 32, provider: UserStatsProvider::class),
         new Get(security: "is_granted('ROLE_DISPLAY_USERS')", provider: UserItemProvider::class),
         new GetCollection(security: "is_granted('ROLE_DISPLAY_USERS')", provider: UserCollectionProvider::class),
     ],

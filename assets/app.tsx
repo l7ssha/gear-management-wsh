@@ -13,11 +13,12 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import RequiresAuth from "./components/base/RequiresAuth";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />
+        element: <RequiresAuth><Root /></RequiresAuth>
     },
     {
         path: "/login",
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin/users",
-        element: <AdminUsers />
+        element: <RequiresAuth><AdminUsers /></RequiresAuth>
     }
 ]);
 

@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\Dto\UserStatsOutputDto;
 use App\Entity\Auth\User;
+use App\Entity\Gear\Camera;
+use App\Entity\Gear\Lens;
 use App\Exception\NotFound\UserNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,6 +15,17 @@ class UserRepository
 {
     public function __construct(private readonly ManagerRegistry $manager)
     {
+    }
+
+    public function getStatsForUser(User $user): UserStatsOutputDto
+    {
+        return $this->getRepository()->createQueryBuilder('u')
+            ->select('NEW App\Dto\UserStatsOutputDto(COUNT(c.id), COUNT(l.id))')
+            ->leftJoin(Camera::class, 'c', 'WITH', 'c.createdBy = :userToFind')
+            ->leftJoin(Lens::class, 'l', 'WITH', 'l.createdBy = :userToFind')
+            ->setParameter('userToFind', $user)
+            ->getQuery()
+            ->getSingleResult();
     }
 
     public function findByUsernameOrEmail(string $identifier): ?User

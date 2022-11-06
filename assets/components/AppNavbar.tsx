@@ -26,6 +26,7 @@ function AppNavbar() {
                     <Button
                         size="large"
                         color="inherit"
+                        href="/"
                     >
                         <CameraIcon sx={{ mr: 2 }} />
                         <Typography sx={{fontWeight: 700}}>

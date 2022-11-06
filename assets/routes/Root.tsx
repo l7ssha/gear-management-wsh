@@ -1,19 +1,50 @@
 import * as React from "react";
-import {Container, Grid, Stack} from "@mui/material";
-import BasePageWithAuth from "../components/base/BasePageWithAuth";
+import {Card, CardContent, Grid, Typography} from "@mui/material";;
+import useApi from "../hooks/useApi";
+import {UserStats} from "../hooks/useApi";
+import {useEffect, useState} from "react";
+import BasePage from "../components/base/BasePage";
 
 export default function Root() {
+    const {fetchUserStats} = useApi();
+    const [userStats, setUserStats] = useState<UserStats|null>(null);
+
+    useEffect(() => {
+        fetchUserStats().then(stats => {
+            setUserStats(stats);
+        })
+    }, []);
+
     return (
-        <BasePageWithAuth>
+        <BasePage>
             <Grid container spacing={3} alignItems="stretch">
                 <Grid item md={2}>
-                    <Grid container direction="column" alignItems="stretch">
-                        <Grid item sx={{backgroundColor: 'red'}}>
-                            this is red color
+                    <Grid container direction="column" alignItems="stretch" spacing={1}>
+                        <Grid item>
+                            <Card variant="outlined">
+                                <CardContent>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        Cameras
+                                    </Typography>
+                                    <Typography variant="h5">
+                                        {userStats === null ? 'Loading' : userStats.cameraCount}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        Lenses
+                                    </Typography>
+                                    <Typography variant="h5" component="span">
+                                        {userStats === null ? 'Loading' : userStats.lensCount}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
                         </Grid>
 
-                        <Grid item sx={{backgroundColor: 'blue'}}>
-                            this is blue color
+                        <Grid item>
+                            <Card variant="outlined">
+                                <CardContent>
+                                    this is blue color
+                                </CardContent>
+                            </Card>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -30,6 +61,6 @@ export default function Root() {
                     </Grid>
                 </Grid>
             </Grid>
-        </BasePageWithAuth>
+        </BasePage>
     )
 }
