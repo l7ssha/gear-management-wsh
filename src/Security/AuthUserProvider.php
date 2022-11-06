@@ -33,6 +33,6 @@ class AuthUserProvider implements UserProviderInterface
      */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        return $this->userRepository->findByUsernameOrEmail($identifier) ?? throw UserNotFoundException::fromUserUsername($identifier);
+        return $this->userRepository->findByUsernameOrEmail($identifier) ?? throw UserNotFoundException::fromUserUsernameOrEmail($identifier);
     }
 }

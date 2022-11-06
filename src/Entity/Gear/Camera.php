@@ -28,8 +28,8 @@ use Symfony\Component\Uid\Ulid;
     operations: [
         new GetCollection(provider: CameraCollectionProvider::class),
         new Get(provider: CameraItemProvider::class),
-        new Post(input: CameraCreateInputDto::class, messenger: 'input', provider: CameraItemProvider::class),
-        new Delete(messenger: 'input'),
+        new Post(input: CameraCreateInputDto::class, messenger: 'input'),
+        new Delete(status: 200, messenger: 'input'),
     ],
     output: CameraOutputDto::class
 )]

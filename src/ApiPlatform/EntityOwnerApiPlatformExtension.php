@@ -48,10 +48,10 @@ class EntityOwnerApiPlatformExtension implements QueryCollectionExtensionInterfa
                     '%s.createdBy',
                     $rootAlias
                 ),
-                'cbu'
+                'cbu',
+                'WITH',
+                'cbu.email = :currentUserIdentifier OR cbu.username = :currentUserIdentifier'
             )
-            ->orWhere('cbu.email = :currentUserIdentifier')
-            ->orWhere('cbu.username = :currentUserIdentifier')
             ->setParameter('currentUserIdentifier', $this->tokenStorage->getToken()->getUser()->getUserIdentifier());
     }
 }

@@ -8,7 +8,6 @@ import {
 import Root from "./routes/Root";
 import AdminUsers from "./routes/AdminUsers";
 import Login from "./routes/Login";
-import RequiresAuth from "./components/RequiresAuth";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -18,7 +17,7 @@ import '@fontsource/roboto/700.css';
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <RequiresAuth><Root /></RequiresAuth>
+        element: <Root />
     },
     {
         path: "/login",
@@ -26,7 +25,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin/users",
-        element: <RequiresAuth><AdminUsers /></RequiresAuth>
+        element: <AdminUsers />
     }
 ]);
 

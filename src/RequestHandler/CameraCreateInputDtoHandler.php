@@ -4,7 +4,9 @@ namespace App\RequestHandler;
 
 use ApiPlatform\Validator\ValidatorInterface;
 use App\Dto\Gear\Camera\CameraCreateInputDto;
+use App\Dto\Gear\Camera\CameraOutputDto;
 use App\Entity\Gear\Camera;
+use App\Mapper\CameraDtoMapper;
 use App\Repository\CameraProducerRepository;
 use App\Repository\CameraRepository;
 use App\Repository\CameraSystemRepository;
@@ -18,11 +20,12 @@ class CameraCreateInputDtoHandler implements MessageHandlerInterface
         private readonly CameraProducerRepository $cameraProducerRepository,
         private readonly CameraSystemRepository $cameraSystemRepository,
         private readonly TokenUserProvider $tokenUserProvider,
-        private readonly ValidatorInterface $validator
+        private readonly ValidatorInterface $validator,
+        private readonly CameraDtoMapper $cameraDtoMapper
     ) {
     }
 
-    public function __invoke(CameraCreateInputDto $dto): Camera
+    public function __invoke(CameraCreateInputDto $dto): CameraOutputDto
     {
         $camera = new Camera();
         $camera
@@ -40,6 +43,6 @@ class CameraCreateInputDtoHandler implements MessageHandlerInterface
         $this->validator->validate($camera);
         $this->cameraRepository->save($camera);
 
-        return $camera;
+        return $this->cameraDtoMapper->mapCameraToOutputDto($camera);
     }
 }

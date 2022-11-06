@@ -1,16 +1,24 @@
 import {axiosWithAuth} from "../services/AxiosService";
 import {useEffect} from "react";
-import UseAuth from "./useAuth";
+import useAuth from "./useAuth";
 import useAuthRefresh from "./useAuthRefresh";
 
 const useAxiosWithAuth = () => {
-    const {token} = UseAuth();
+    const {token, loggedInUser} = useAuth();
     const {performRefresh} = useAuthRefresh();
 
     useEffect(() => {
         const requestIntercept = axiosWithAuth.interceptors.request.use(
-            config => {
-                config.headers['Authorization'] = `Bearer ${token()}`;
+            async config => {
+                let finalToken = token();
+
+                const tokenExpiresAt = loggedInUser().expiresAt;
+                const nowInMilis = new Date().getTime() / 1000;
+                if (tokenExpiresAt < nowInMilis) {
+                    finalToken = await performRefresh();
+                }
+
+                config.headers['Authorization'] = `Bearer ${finalToken}`;
 
                 return config;
             },

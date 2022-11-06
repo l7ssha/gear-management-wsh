@@ -30,6 +30,11 @@ export default class AuthService {
         return localStorage.getItem(USER_STORAGE_KEY) !== null;
     }
 
+    static logOut(): void
+    {
+        localStorage.setItem(USER_STORAGE_KEY, null);
+    }
+
     static async refreshToken(): Promise<string|null>  {
         try {
             const userStorage = AuthService.getUserStorage();

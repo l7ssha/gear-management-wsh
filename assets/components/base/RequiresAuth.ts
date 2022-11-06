@@ -1,4 +1,4 @@
-import AuthService from "../services/AuthService";
+import AuthService from "../../services/AuthService";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 

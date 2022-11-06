@@ -27,7 +27,7 @@ class UserRepository
 
     public function getByUsernameOrEmail(string $identifier): User
     {
-        return $this->findByUsernameOrEmail($identifier) ?? throw UserNotFoundException::fromUserUsername($identifier);
+        return $this->findByUsernameOrEmail($identifier) ?? throw UserNotFoundException::fromUserUsernameOrEmail($identifier);
     }
 
     public function findById(string $id): ?User

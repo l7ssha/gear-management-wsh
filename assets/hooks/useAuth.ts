@@ -13,6 +13,13 @@ const useAuth = () => {
             }
 
             return userStorage.token;
+        },
+        logOut: () => {
+            AuthService.logOut();
+            navigate("/login");
+        },
+        loggedInUser: () => {
+            return AuthService.getUserStorage();
         }
     }
 }
