@@ -2,7 +2,6 @@
 
 namespace App\Exception;
 
-use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class NotFoundException extends HttpException

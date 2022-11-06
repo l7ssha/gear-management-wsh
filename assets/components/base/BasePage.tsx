@@ -6,7 +6,7 @@ export default function BasePage(props: any) {
     return (
         <Container>
             <AppNavbar />
-            <Container sx={{mt: 10, backgroundColor: 'green', paddingBottom: 2}}>
+            <Container sx={{mt: 10, paddingBottom: 2}}>
                 {props.children}
             </Container>
         </Container>

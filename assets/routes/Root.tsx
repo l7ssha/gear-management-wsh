@@ -5,6 +5,7 @@ import {UserStats} from "../hooks/useApi";
 import {useEffect, useState} from "react";
 import BasePage from "../components/base/BasePage";
 import useAuth from "../hooks/useAuth";
+import BasicLoader from "../components/loading/BasicLoader";
 
 export default function Root() {
     const {fetchUserStats} = useApi();
@@ -34,11 +35,25 @@ export default function Root() {
                             <Card variant="outlined">
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5">
-                                        Cameras <Box component="span" sx={{fontWeight: 700}}>{userStats === null ? 'Loading' : userStats.cameraCount}</Box>
+                                        <Box component="span">
+                                            Cameras&nbsp;
+                                        </Box>
+                                        <Box component="span" sx={{fontWeight: 700}}>
+                                            <BasicLoader loading={userStats === null} >
+                                                <span>{userStats?.cameraCount}</span>
+                                            </BasicLoader>
+                                        </Box>
                                     </Typography>
 
                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5">
-                                        Lenses <Box component="span" sx={{fontWeight: 700}}>{userStats === null ? 'Loading' : userStats.lensCount}</Box>
+                                        <Box component="span">
+                                            Lens&nbsp;
+                                        </Box>
+                                        <Box component="span" sx={{fontWeight: 700}}>
+                                            <BasicLoader loading={userStats === null}>
+                                                <span>{userStats?.lensCount}</span>
+                                            </BasicLoader>
+                                        </Box>
                                     </Typography>
                                 </CardContent>
                             </Card>
