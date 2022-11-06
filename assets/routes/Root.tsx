@@ -1,13 +1,15 @@
 import * as React from "react";
-import {Card, CardContent, Grid, Typography} from "@mui/material";;
+import {Box, Card, CardContent, Grid, Typography} from "@mui/material";;
 import useApi from "../hooks/useApi";
 import {UserStats} from "../hooks/useApi";
 import {useEffect, useState} from "react";
 import BasePage from "../components/base/BasePage";
+import useAuth from "../hooks/useAuth";
 
 export default function Root() {
     const {fetchUserStats} = useApi();
     const [userStats, setUserStats] = useState<UserStats|null>(null);
+    const {loggedInUser} = useAuth();
 
     useEffect(() => {
         fetchUserStats().then(stats => {
@@ -23,18 +25,7 @@ export default function Root() {
                         <Grid item>
                             <Card variant="outlined">
                                 <CardContent>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        Cameras
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        {userStats === null ? 'Loading' : userStats.cameraCount}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        Lenses
-                                    </Typography>
-                                    <Typography variant="h5" component="span">
-                                        {userStats === null ? 'Loading' : userStats.lensCount}
-                                    </Typography>
+                                    Hi, {loggedInUser.username}
                                 </CardContent>
                             </Card>
                         </Grid>
@@ -42,7 +33,13 @@ export default function Root() {
                         <Grid item>
                             <Card variant="outlined">
                                 <CardContent>
-                                    this is blue color
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5">
+                                        Cameras <Box component="span" sx={{fontWeight: 700}}>{userStats === null ? 'Loading' : userStats.cameraCount}</Box>
+                                    </Typography>
+
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5">
+                                        Lenses <Box component="span" sx={{fontWeight: 700}}>{userStats === null ? 'Loading' : userStats.lensCount}</Box>
+                                    </Typography>
                                 </CardContent>
                             </Card>
                         </Grid>

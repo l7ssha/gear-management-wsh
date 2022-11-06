@@ -4,17 +4,16 @@ import useAuth from "./useAuth";
 import useAuthRefresh from "./useAuthRefresh";
 
 const useAxiosWithAuth = () => {
-    const {token, loggedInUser} = useAuth();
+    const {getToken, loggedInUser} = useAuth();
     const {performRefresh} = useAuthRefresh();
 
     useEffect(() => {
         const requestIntercept = axiosWithAuth.interceptors.request.use(
             async config => {
-                let finalToken = token();
+                let finalToken = getToken();
 
-                const tokenExpiresAt = loggedInUser().expiresAt;
                 const nowInMilis = new Date().getTime() / 1000;
-                if (tokenExpiresAt < nowInMilis) {
+                if (loggedInUser.expiresAt < nowInMilis) {
                     finalToken = await performRefresh();
                 }
 
@@ -46,7 +45,7 @@ const useAxiosWithAuth = () => {
             axiosWithAuth.interceptors.request.eject(requestIntercept);
             axiosWithAuth.interceptors.response.eject(responseIntercept);
         }
-    }, [token, performRefresh]);
+    }, [getToken, performRefresh]);
 
     return axiosWithAuth;
 };

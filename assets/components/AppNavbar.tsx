@@ -7,8 +7,7 @@ import {Avatar, Box, Button, Container, Divider, Grid, IconButton, Menu, MenuIte
 import useAuth from "../hooks/useAuth";
 
 function AppNavbar() {
-    const {loggedInUser, logOut} = useAuth();
-    const loggedInUserStorage = loggedInUser();
+    const {loggedInUser, performLogOut} = useAuth();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const handleCloseUserMenu = () => {
@@ -56,7 +55,7 @@ function AppNavbar() {
                 <Box sx={{flexGrow: 0}}>
                     <Tooltip title="Open settings">
                         <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-                            <Avatar alt={loggedInUserStorage.username}>{loggedInUserStorage.username.slice(0, 1).toUpperCase()}</Avatar>
+                            <Avatar alt={loggedInUser.username}>{loggedInUser.username.slice(0, 1).toUpperCase()}</Avatar>
                         </IconButton>
                     </Tooltip>
 
@@ -88,7 +87,7 @@ function AppNavbar() {
                             <Typography textAlign="center">Settings</Typography>
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={() => logOut()}>
+                        <MenuItem onClick={performLogOut}>
                             <Typography textAlign="center">Logout</Typography>
                         </MenuItem>
                     </Menu>

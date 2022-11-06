@@ -5,7 +5,7 @@ const useAuth = () => {
     const navigate = useNavigate();
 
     return {
-        token: () => {
+        getToken: () => {
             const userStorage = AuthService.getUserStorage();
 
             if (userStorage === null) {
@@ -14,13 +14,11 @@ const useAuth = () => {
 
             return userStorage.token;
         },
-        logOut: () => {
+        performLogOut: () => {
             AuthService.logOut();
             navigate("/login");
         },
-        loggedInUser: () => {
-            return AuthService.getUserStorage();
-        }
+        loggedInUser: AuthService.getUserStorage()
     }
 }
 
