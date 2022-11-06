@@ -3,11 +3,12 @@
 namespace App\Exception;
 
 use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class NotFoundException extends RuntimeException
+class NotFoundException extends HttpException
 {
     public function __construct(string $message)
     {
-        parent::__construct($message);
+        parent::__construct(404, $message);
     }
 }
