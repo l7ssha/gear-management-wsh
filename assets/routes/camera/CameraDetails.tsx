@@ -1,23 +1,18 @@
 import * as React from "react";
-import {useLoaderData} from "react-router";
-import {useEffect, useState} from "react";
-import useApi, {Camera} from "../../hooks/useApi";
+import { useLoaderData } from "react-router";
+import { useEffect, useState } from "react";
+import useApi, { Camera } from "../../hooks/useApi";
 import BasePageAuthenticatedWithLayout from "../../components/base/BasePageAuthenticatedWithLayout";
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function CameraDetails() {
-    const cameraId = useLoaderData();
-    const [cameraDetails, setCameraDetails] = useState<Camera|null>(null)
-    const {fetchCamera} = useApi();
+  const cameraId = useLoaderData();
+  const [cameraDetails, setCameraDetails] = useState<Camera | null>(null);
+  const { fetchCamera } = useApi();
 
-    useEffect(() => {
-        fetchCamera(cameraId.toString())
-            .then(camera => setCameraDetails(camera));
-    }, []);
+  useEffect(() => {
+    fetchCamera(cameraId.toString()).then((camera) => setCameraDetails(camera));
+  }, []);
 
-    return (
-        <Box component="div">
-            {cameraDetails?.model}
-        </Box>
-    )
+  return <Box component="div">{cameraDetails?.model}</Box>;
 }

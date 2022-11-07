@@ -1,20 +1,20 @@
 import AuthService from "../services/AuthService";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 
 const useAuth = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return {
-        performRefresh: async (): Promise<string> => {
-            const refreshedToken = AuthService.refreshToken();
+  return {
+    performRefresh: async (): Promise<string> => {
+      const refreshedToken = AuthService.refreshToken();
 
-            if (refreshedToken === null) {
-                navigate('/login');
-            }
+      if (refreshedToken === null) {
+        navigate("/login");
+      }
 
-            return refreshedToken;
-        }
-    }
-}
+      return refreshedToken;
+    },
+  };
+};
 
 export default useAuth;
