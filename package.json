@@ -27,8 +27,6 @@
         "@symfony/webpack-encore": "^4.0.0",
         "core-js": "^3.23.0",
         "eslint": "^8.27.0",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.7.1",
         "regenerator-runtime": "^0.13.9",
         "ts-loader": "^9.0.0",
@@ -46,12 +44,6 @@
         "lint:fix": "eslint assets/**/*.{tsx,ts} --fix",
         "lint": "eslint assets/**/*.{tsx,ts}",
         "prettify": "prettier assets/**/*.{tsx,ts} --write"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "plugin:prettier/recommended"
-        ]
     },
     "prettier": {
         "printWidth": 120,
