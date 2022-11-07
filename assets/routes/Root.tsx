@@ -1,106 +1,86 @@
 import * as React from "react";
-import {Box, Card, CardContent, Grid, Link, Typography} from "@mui/material";;
+import {Box, Button, Card, CardActions, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import useApi, {Camera} from "../hooks/useApi";
-import {UserStats} from "../hooks/useApi";
 import {useEffect, useState} from "react";
-import BasePage from "../components/base/BasePage";
-import useAuth from "../hooks/useAuth";
 import BasicLoader from "../components/loading/BasicLoader";
+import {Link} from "react-router-dom";
+import WrappedLink from "../components/navbar/WrappedLink";
 
 export default function Root() {
-    const {fetchUserStats, fetchCameras} = useApi();
-    const [userStats, setUserStats] = useState<UserStats|null>(null);
-    const [topCamera, setTopCamera] = useState<Camera|null>(null);
-    const {loggedInUser} = useAuth();
+    const {fetchCameras} = useApi();
+    const [topCameras, setTopCameras] = useState<Camera[]|null>(null);
+    const [topLenses, setTopLenses] = useState<any[]|null>([]);
 
     useEffect(() => {
-        fetchUserStats().then(stats => {
-            setUserStats(stats);
-        });
-
         fetchCameras({
             "order[createdAt]": 'desc',
-            perPage: "1"
+            perPage: "3"
         }).then(cameras => {
-            setTopCamera(cameras.pop());
+            setTopCameras(cameras.slice(0, 3));
         });
     }, []);
 
+    const camerasList = topCameras?.length > 0
+        ? topCameras.map(camera => <Box component='p' key={camera.id}><Link to={`/cameras/${camera.id}`}>{camera.producer.name} {camera.model} ({camera.serialNumber})</Link></Box>)
+        : <Box component='span'>No cameras... :(</Box>
+    ;
+
+    const lensesList = topLenses !== null && topLenses.length > 0
+        ? topLenses.map(lens => <Box component='p' key={lens.id}><Link to={`/lenses/${lens.id}`}>{lens.producer.name} {lens.model} ({lens.serialNumber})</Link></Box>)
+        : <Box component='span'>No lenses... :(</Box>
+    ;
+
     return (
-        <BasePage>
-            <Grid container spacing={3} alignItems="stretch">
-                <Grid item md={2}>
-                    <Grid container direction="column" alignItems="stretch" spacing={1}>
-                        <Grid item>
-                            <Card variant="outlined">
-                                <CardContent>
-                                    Hi, {loggedInUser.username}
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item>
-                            <Card variant="outlined">
-                                <CardContent>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5">
-                                        <Box component="span">
-                                            Cameras&nbsp;
-                                        </Box>
-                                        <Box component="span" sx={{fontWeight: 700}}>
-                                            <BasicLoader loading={userStats === null} >
-                                                <span>{userStats?.cameraCount}</span>
+        <Box component="div">
+            <Grid container direction="column" spacing={1}>
+                <Grid item>
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Grid container spacing={1}>
+                                <Grid item md={6}>
+                                    <Card variant="outlined">
+                                        <CardHeader title='Latest Cameras' sx={{m: 0, p: 1}}/>
+                                        <CardContent sx={{m: 0, p: 1}}>
+                                            <BasicLoader loading={topCameras === null}>
+                                                {camerasList}
                                             </BasicLoader>
-                                        </Box>
-                                    </Typography>
+                                        </CardContent>
+                                        <CardActions>
+                                            <WrappedLink to='/cameras'>
+                                                <Button size="small">Browse cameras</Button>
+                                            </WrappedLink>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
 
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5">
-                                        <Box component="span">
-                                            Lens&nbsp;
-                                        </Box>
-                                        <Box component="span" sx={{fontWeight: 700}}>
-                                            <BasicLoader loading={userStats === null}>
-                                                <span>{userStats?.lensCount}</span>
+                                <Grid item md={6}>
+                                    <Card variant="outlined">
+                                        <CardHeader title='Latest Lenses' sx={{m: 0, p: 1}}/>
+                                        <CardContent sx={{m: 0, p: 1}}>
+                                            <BasicLoader loading={topLenses === null}>
+                                                {lensesList}
                                             </BasicLoader>
-                                        </Box>
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
+                                        </CardContent>
+                                        <CardActions>
+                                            <WrappedLink to='/lenses'>
+                                                <Button size="small">Browse lenses</Button>
+                                            </WrappedLink>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
                 </Grid>
 
-                <Grid item md={10}>
-                    <Grid container direction="column" spacing={1}>
-                        <Grid item>
-                            <Card variant="outlined">
-                                <CardContent>
-                                    <Typography component='p' variant='h5'>
-                                        Latest Camera
-                                    </Typography>
-                                    <BasicLoader loading={topCamera === null}>
-                                        <Link href={`/camera/${topCamera?.id}`}>{topCamera?.producer.name} {topCamera?.model} ({topCamera?.serialNumber})</Link>
-                                    </BasicLoader>
-
-                                    <Typography component='p' variant='h5'>
-                                        Latest Lens
-                                    </Typography>
-                                    <Box>
-                                        TODO
-                                    </Box>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item>
-                            <Card variant="outlined">
-                                <CardContent>
-                                    This is next card
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
+                <Grid item>
+                    <Card variant="outlined">
+                        <CardContent>
+                            This is next card
+                        </CardContent>
+                    </Card>
                 </Grid>
             </Grid>
-        </BasePage>
+        </Box>
     )
 }

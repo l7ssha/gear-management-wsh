@@ -36,6 +36,10 @@ export default function useApi() {
                 params: params
             });
             return response.data;
+        },
+        fetchCamera: async (cameraId: string): Promise<Camera> => {
+            const response = await axiosPrivate.get<Camera>(`/api/cameras/${cameraId}`);
+            return response.data;
         }
     };
 }

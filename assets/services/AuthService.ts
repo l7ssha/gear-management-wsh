@@ -68,7 +68,7 @@ export default class AuthService {
         } catch (error) {
             return {
                 successful: false,
-                errorMessage: error.response.data.detail
+                errorMessage: error.response.data.detail ?? error.response.data.message
             };
         }
     }

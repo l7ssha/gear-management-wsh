@@ -2,9 +2,11 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import CameraIcon from '@mui/icons-material/Camera';
-import {Avatar, Box, Button, Container, Divider, Grid, IconButton, Menu, MenuItem, Tooltip} from "@mui/material";
+import {Avatar, Box, Divider, IconButton, Menu, MenuItem, Tooltip} from "@mui/material";
 import useAuth from "../hooks/useAuth";
+import NavbarLinkButton from "./navbar/NavbarLinkButton";
+import LogoType from "./LogoType";
+import WrappedLink from "./navbar/WrappedLink";
 
 function AppNavbar() {
     const {loggedInUser, performLogOut} = useAuth();
@@ -22,34 +24,11 @@ function AppNavbar() {
         <AppBar>
             <Toolbar>
                 <Box sx={{flexGrow: 1}}>
-                    <Button
-                        size="large"
-                        color="inherit"
-                        href="/"
-                    >
-                        <CameraIcon sx={{ mr: 2 }} />
-                        <Typography sx={{fontWeight: 700}}>
-                            Gear Manager
-                        </Typography>
-                    </Button>
+                    <WrappedLink to='/'><LogoType /></WrappedLink>
 
-                    <Button color="inherit" href="/cameras">
-                        <Typography>
-                            Cameras
-                        </Typography>
-                    </Button>
-
-                    <Button color="inherit" href="/lenses">
-                        <Typography>
-                            Lenses
-                        </Typography>
-                    </Button>
-
-                    <Button color="inherit" href="/film">
-                        <Typography>
-                            Film
-                        </Typography>
-                    </Button>
+                    <NavbarLinkButton text='Cameras' to='/cameras' />
+                    <NavbarLinkButton text='Lenses' to='/lenses' />
+                    <NavbarLinkButton text='Film' to='/film' />
                 </Box>
 
                 <Box sx={{flexGrow: 0}}>

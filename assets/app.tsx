@@ -8,26 +8,44 @@ import {
 import Root from "./routes/Root";
 import AdminUsers from "./routes/AdminUsers";
 import Login from "./routes/Login";
+import Cameras from "./routes/camera/Cameras";
+import CameraDetails from "./routes/camera/CameraDetails";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import RequiresAuth from "./components/base/RequiresAuth";
+import {routerIdParamLoader} from "./utils/routerIdParamLoader";
+import BasePageAuthenticatedWithLayout from "./components/base/BasePageAuthenticatedWithLayout";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <RequiresAuth><Root /></RequiresAuth>
+        element: <BasePageAuthenticatedWithLayout />,
+        children: [
+            {
+                index: true,
+                element: <Root />
+            },
+            {
+                path: "/cameras/:id",
+                element: <CameraDetails />,
+                loader: routerIdParamLoader
+            },
+            {
+                path: "/cameras",
+                element: <Cameras />,
+            },
+            {
+                path: "/admin/users",
+                element: <AdminUsers />
+            }
+        ]
     },
     {
         path: "/login",
         element: <Login />
     },
-    {
-        path: "/admin/users",
-        element: <RequiresAuth><AdminUsers /></RequiresAuth>
-    }
 ]);
 
 createRoot(document.getElementById("root")).render(

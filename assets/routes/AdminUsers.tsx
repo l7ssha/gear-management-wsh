@@ -1,7 +1,8 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import useAxiosWithAuth from "../hooks/useAxiosWithAuth";
-import BasePage from "../components/base/BasePage";
+import BasePageAuthenticatedWithLayout from "../components/base/BasePageAuthenticatedWithLayout";
+import {Box} from "@mui/material";
 
 interface User {
     id: string,
@@ -20,13 +21,13 @@ export default function AdminUsers() {
     }, []);
 
     return (
-        <BasePage>
+        <Box component="div">
             <span>Users</span>
             {
                 users.map((user) => {
                     return <p key={user.id}>{user.username} {user.email}</p>
                 })
             }
-        </BasePage>
+        </Box>
     )
 }
