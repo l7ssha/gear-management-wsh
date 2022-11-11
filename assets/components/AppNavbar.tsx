@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 import NavbarLinkButton from "./navbar/NavbarLinkButton";
 import LogoType from "./LogoType";
 import WrappedLink from "./navbar/WrappedLink";
+import ThemeSwitch from "./navbar/ThemeSwitch";
 
 function AppNavbar() {
   const { loggedInUser, performLogOut } = useAuth();
@@ -24,9 +25,11 @@ function AppNavbar() {
     <AppBar>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
-          <WrappedLink to="/">
-            <LogoType />
-          </WrappedLink>
+          <Box sx={{ pr: 2 }} component="span">
+            <WrappedLink to="/">
+              <LogoType />
+            </WrappedLink>
+          </Box>
 
           <NavbarLinkButton text="Cameras" to="/cameras" />
           <NavbarLinkButton text="Lenses" to="/lenses" />
@@ -34,6 +37,8 @@ function AppNavbar() {
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>
+          <ThemeSwitch />
+
           <Tooltip title="Open settings">
             <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
               <Avatar alt={loggedInUser.username}>{loggedInUser.username.slice(0, 1).toUpperCase()}</Avatar>
