@@ -1,12 +1,4 @@
-import {
-  ComponentProps,
-  JSXElementConstructor,
-  PropsWithChildren,
-  ReactElement,
-  ReactFragment,
-  ReactNode,
-} from "react";
-import { Box } from "@mui/material";
+import { PropsWithChildren } from "react";
 import * as React from "react";
 
 export interface LoaderProps extends PropsWithChildren {

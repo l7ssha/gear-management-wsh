@@ -19,11 +19,11 @@ class WrappingHandlersLocator implements HandlersLocatorInterface
         $handlerDescriptors = $this->decorated->getHandlers($envelope);
         $message = $envelope->getMessage();
 
-        foreach ($handlerDescriptors as $handlerDescriptor) {
-            if ($envelope->last(RemoveStamp::class) === null) {
-                yield $handlerDescriptor;
-            }
+        if ($envelope->last(RemoveStamp::class) === null) {
+            return $handlerDescriptors;
+        }
 
+        foreach ($handlerDescriptors as $handlerDescriptor) {
             [$className] = explode(':', $handlerDescriptor->getName());
             if (!in_array(DeleteHandlerTrait::class, class_uses($className))) {
                 continue;

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import useAxiosWithAuth from "../hooks/useAxiosWithAuth";
-import BasePageAuthenticatedWithLayout from "../components/base/BasePageAuthenticatedWithLayout";
 import { Box } from "@mui/material";
 
 interface User {
