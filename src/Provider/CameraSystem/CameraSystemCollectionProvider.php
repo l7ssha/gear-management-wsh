@@ -6,7 +6,7 @@ use ApiPlatform\Doctrine\Orm\Paginator;
 use ApiPlatform\Doctrine\Orm\State\CollectionProvider;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\ApiPlatform\ApiPlatformCollectionProviderTrait;
+use App\ApiPlatform\Provider\ApiPlatformCollectionProviderTrait;
 use App\Entity\Gear\CameraSystem;
 use App\Mapper\CameraSystemDtoMapper;
 

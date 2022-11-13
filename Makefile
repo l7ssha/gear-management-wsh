@@ -18,6 +18,18 @@ rector: ## Run rector
 rector-check: ## Run rector in dry run mode
 	docker compose run app vendor/bin/rector process --dry-run
 
+.PHONY: phpstan
+phpstan: ## Run phpstan in dry run mode
+	docker compose run app vendor/bin/phpstan analyze src --level=3
+
+.PHONY: front-prettify
+front-prettify: ## Run prettify command
+	docker compose run app yarn prettify
+
+.PHONY: front-watch
+front-watch: ## Run watch command
+	docker compose run app yarn watch
+
 .PHONY: server-start
 server-start: ## Start server
 	docker compose up -d
