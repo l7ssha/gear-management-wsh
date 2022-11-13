@@ -2,6 +2,7 @@
 
 namespace App\Entity\Gear;
 
+use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
@@ -39,12 +40,12 @@ use Symfony\Component\Uid\Ulid;
 #[ApiFilter(
     SearchFilter::class,
     properties: [
-        'model' => 'ipartial',
-        'type' => 'exact',
-        'format' => 'exact',
-        'system' => 'exact',
-        'serialNumber' => 'ipartial',
-        'serialNumberAlternative' => 'ipartial',
+        'model' => SearchFilterInterface::STRATEGY_PARTIAL,
+        'type' => SearchFilterInterface::STRATEGY_EXACT,
+        'format' => SearchFilterInterface::STRATEGY_EXACT,
+        'system' => SearchFilterInterface::STRATEGY_EXACT,
+        'serialNumber' => SearchFilterInterface::STRATEGY_PARTIAL,
+        'serialNumberAlternative' => SearchFilterInterface::STRATEGY_PARTIAL,
     ]
 )]
 #[ApiFilter(OrderFilter::class, properties: [
