@@ -33,7 +33,7 @@ use Symfony\Component\Uid\Ulid;
         new GetCollection(provider: CameraCollectionProvider::class),
         new Get(provider: CameraItemProvider::class),
         new Post(input: CameraCreateInputDto::class, messenger: 'input'),
-        new Delete(status: 200, messenger: 'input'),
+        new Delete(status: 204, output: false, messenger: 'input'),
     ],
     output: CameraOutputDto::class
 )]

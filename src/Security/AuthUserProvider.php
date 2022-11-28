@@ -5,7 +5,6 @@ namespace App\Security;
 use App\Entity\Auth\User;
 use App\Exception\NotFound\UserNotFoundException;
 use App\Repository\UserRepository;
-use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -16,7 +15,7 @@ class AuthUserProvider implements UserProviderInterface
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function refreshUser(UserInterface $user): UserInterface
     {
@@ -29,7 +28,7 @@ class AuthUserProvider implements UserProviderInterface
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {

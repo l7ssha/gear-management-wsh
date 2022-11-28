@@ -2,6 +2,6 @@
 
 namespace App\Utils\Messenger;
 
-trait DeleteHandlerTrait
+trait ProvideEntity
 {
 }

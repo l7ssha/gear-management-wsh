@@ -3,7 +3,6 @@
 namespace App\Utils\Doctrine;
 
 use App\Entity\Auth\User;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 trait SoftDeleteTrait
@@ -12,7 +11,7 @@ trait SoftDeleteTrait
     protected ?User $deletedBy = null;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    protected ?DateTimeImmutable $deletedAt = null;
+    protected ?\DateTimeImmutable $deletedAt = null;
 
     public function getDeletedBy(): ?User
     {
@@ -26,12 +25,12 @@ trait SoftDeleteTrait
         return $this;
     }
 
-    public function getDeletedAt(): ?DateTimeImmutable
+    public function getDeletedAt(): ?\DateTimeImmutable
     {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(?DateTimeImmutable $deletedAt): self
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
 

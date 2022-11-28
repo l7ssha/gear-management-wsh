@@ -3,7 +3,6 @@
 namespace App\Utils\Doctrine;
 
 use App\Entity\Auth\User;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UpdatedAuditTrait
@@ -12,7 +11,7 @@ trait UpdatedAuditTrait
     protected ?User $updatedBy = null;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    protected ?DateTimeImmutable $updatedAt = null;
+    protected ?\DateTimeImmutable $updatedAt = null;
 
     public function getUpdatedBy(): ?User
     {
@@ -26,12 +25,12 @@ trait UpdatedAuditTrait
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

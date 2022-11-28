@@ -3,7 +3,6 @@
 namespace App\Utils\Doctrine;
 
 use App\Entity\Auth\User;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedAuditTrait
@@ -12,7 +11,7 @@ trait CreatedAuditTrait
     protected User $createdBy;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    protected DateTimeImmutable $createdAt;
+    protected \DateTimeImmutable $createdAt;
 
     public function getCreatedBy(): User
     {
@@ -26,12 +25,12 @@ trait CreatedAuditTrait
         return $this;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
