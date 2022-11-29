@@ -5,7 +5,10 @@ namespace App\Entity\Film;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Dto\Film\FilmOutputDto;
 use App\Model\FilmType;
+use App\Provider\Film\FilmCollectionProvider;
+use App\Provider\Film\FilmItemProvider;
 use App\Utils\Doctrine\CreatedAuditTrait;
 use App\Utils\Doctrine\EntityOwnerTrait;
 use App\Utils\Doctrine\UpdatedAuditTrait;
@@ -16,9 +19,10 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'films')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
-    ]
+        new Get(provider: FilmItemProvider::class),
+        new GetCollection(provider: FilmCollectionProvider::class),
+    ],
+    output: FilmOutputDto::class
 )]
 #[ORM\Index(fields: ['model'])]
 #[ORM\Index(fields: ['createdBy'])]
@@ -86,6 +90,18 @@ class Film
     public function setSpeed(int $speed): self
     {
         $this->speed = $speed;
+
+        return $this;
+    }
+
+    public function getFilmType(): FilmType
+    {
+        return $this->filmType;
+    }
+
+    public function setFilmType(FilmType $filmType): Film
+    {
+        $this->filmType = $filmType;
 
         return $this;
     }

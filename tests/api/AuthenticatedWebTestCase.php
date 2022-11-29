@@ -28,7 +28,7 @@ abstract class AuthenticatedWebTestCase extends ApiTestCase
 
     private function createTokenClient(string $token): HttpClientInterface
     {
-        $client = static::createClient(
+        $client = self::createClient(
             [],
             [
                 'auth_bearer' => $token,
@@ -46,18 +46,18 @@ abstract class AuthenticatedWebTestCase extends ApiTestCase
      *
      * @throws \Exception
      */
-    private static function createTokenWithRoles(array $roles): string
+    private static function createTokenWithRoles(array $roles, string $userIdentifier = 'admin'): string
     {
         /** @var JWTTokenManagerInterface $jwtManager */
         $jwtManager = self::getContainer()->get('lexik_jwt_authentication.jwt_manager');
-        $user = new JWTUser('admin_id', $roles);
+        $user = new JWTUser($userIdentifier, $roles);
 
         return $jwtManager->createFromPayload(
             $user,
             [
                 'id' => $user->getUserIdentifier(),
                 'roles' => $user->getRoles(),
-                'username' => 'admin',
+                'username' => $userIdentifier,
             ]
         );
     }
