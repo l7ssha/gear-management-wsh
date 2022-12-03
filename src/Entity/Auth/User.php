@@ -23,8 +23,8 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'users')]
 #[ApiResource(
     operations: [
-        new Get(uriTemplate: '/users/stats', output: UserStatsOutputDto::class, priority: 32, provider: UserStatsProvider::class),
-        new Get(security: "is_granted('ROLE_DISPLAY_USERS')", provider: UserItemProvider::class),
+        new Get(uriTemplate: '/users/stats', output: UserStatsOutputDto::class, priority: 1, provider: UserStatsProvider::class),
+        new Get(security: "is_granted('ROLE_DISPLAY_USERS')", priority: 100, provider: UserItemProvider::class),
         new GetCollection(security: "is_granted('ROLE_DISPLAY_USERS')", provider: UserCollectionProvider::class),
     ],
     output: UserOutputDto::class

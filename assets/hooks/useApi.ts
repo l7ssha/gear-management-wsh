@@ -8,8 +8,9 @@ export interface UserStats {
 export interface Camera {
   id: string;
   producer: PartialProducer;
+  type: 'digital' | 'film';
   model: string;
-  format: string;
+  format: 'aps_c' | 'full_frame' | 'half_frame' | 'medium_format';
   system: PartialSystem;
   serialNumber: string;
   serialNumberAlternative: string | null;
@@ -22,6 +23,11 @@ export interface PartialProducer {
 export interface PartialSystem {
   name: string;
 }
+
+export const cameraTypeOptions = [
+    "digital",
+    "film"
+];
 
 export default function useApi() {
   const axiosPrivate = useAxiosWithAuth();

@@ -6,7 +6,7 @@ const useAuth = () => {
 
   return {
     performRefresh: async (): Promise<string> => {
-      const refreshedToken = AuthService.refreshToken();
+      const refreshedToken = await AuthService.refreshToken();
 
       if (refreshedToken === null) {
         navigate("/login");
